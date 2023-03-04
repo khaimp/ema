@@ -7,7 +7,7 @@ const routes = [
   {
     path: '/',
     name: 'ema',
-    component: () => import("@/views/rsi-main.vue")
+    component: () => import("@/views/ema-main.vue")
   }
 ]
 const router = new VueRouter({

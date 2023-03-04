@@ -39,6 +39,7 @@
               colspan="6"
               class="text-center border-table"
               style="background-color: #3b3b3b"
+              v-if="check1H()"
             >
               <span style="color: white; font-size: 16px">1H</span>
             </th>
@@ -46,6 +47,7 @@
               colspan="6"
               class="text-center border-table"
               style="background-color: #3b3b3b"
+              v-if="check4H()"
             >
               <span style="color: white; font-size: 16px">4H</span>
             </th>
@@ -53,6 +55,7 @@
               colspan="6"
               class="text-center border-table"
               style="background-color: #3b3b3b"
+              v-if="check24H()"
             >
               <span style="color: white; font-size: 16px">24H</span>
             </th>
@@ -61,108 +64,126 @@
             <th
               class="border-table"
               style="border-bottom: 1px solid rgb(170, 170, 170)"
+              v-if="arrHeader.includes('ema_1h_12')"
             >
               EMA12
             </th>
             <th
               class="border-table"
               style="border-bottom: 1px solid rgb(170, 170, 170)"
+              v-if="arrHeader.includes('ema_1h_21')"
             >
               EMA21
             </th>
             <th
               class="border-table"
               style="border-bottom: 1px solid rgb(170, 170, 170)"
+              v-if="arrHeader.includes('ema_1h_26')"
             >
               EMA26
             </th>
             <th
               class="border-table"
               style="border-bottom: 1px solid rgb(170, 170, 170)"
+              v-if="arrHeader.includes('ema_1h_50')"
             >
               EMA50
             </th>
             <th
               class="border-table"
               style="border-bottom: 1px solid rgb(170, 170, 170)"
+              v-if="arrHeader.includes('ema_1h_100')"
             >
               EMA100
             </th>
             <th
               class="border-table"
               style="border-bottom: 1px solid rgb(170, 170, 170)"
+              v-if="arrHeader.includes('ema_1h_200')"
             >
               EMA200
             </th>
             <th
               class="border-table"
               style="border-bottom: 1px solid rgb(170, 170, 170)"
+              v-if="arrHeader.includes('ema_4h_12')"
             >
               EMA12
             </th>
             <th
               class="border-table"
               style="border-bottom: 1px solid rgb(170, 170, 170)"
+              v-if="arrHeader.includes('ema_4h_21')"
             >
               EMA21
             </th>
             <th
               class="border-table"
               style="border-bottom: 1px solid rgb(170, 170, 170)"
+              v-if="arrHeader.includes('ema_4h_26')"
             >
               EMA26
             </th>
             <th
               class="border-table"
               style="border-bottom: 1px solid rgb(170, 170, 170)"
+              v-if="arrHeader.includes('ema_4h_50')"
             >
               EMA50
             </th>
             <th
               class="border-table"
               style="border-bottom: 1px solid rgb(170, 170, 170)"
+              v-if="arrHeader.includes('ema_4h_100')"
             >
               EMA100
             </th>
             <th
               class="border-table"
               style="border-bottom: 1px solid rgb(170, 170, 170)"
+              v-if="arrHeader.includes('ema_4h_200')"
             >
               EMA200
             </th>
             <th
               class="border-table"
               style="border-bottom: 1px solid rgb(170, 170, 170)"
+              v-if="arrHeader.includes('ema_24h_12')"
             >
               EMA12
             </th>
             <th
               class="border-table"
               style="border-bottom: 1px solid rgb(170, 170, 170)"
+              v-if="arrHeader.includes('ema_24h_21')"
             >
               EMA21
             </th>
             <th
               class="border-table"
               style="border-bottom: 1px solid rgb(170, 170, 170)"
+              v-if="arrHeader.includes('ema_24h_26')"
             >
               EMA26
             </th>
             <th
               class="border-table"
               style="border-bottom: 1px solid rgb(170, 170, 170)"
+              v-if="arrHeader.includes('ema_24h_50')"
             >
               EMA50
             </th>
             <th
               class="border-table"
               style="border-bottom: 1px solid rgb(170, 170, 170)"
+              v-if="arrHeader.includes('ema_24h_100')"
             >
               EMA100
             </th>
             <th
               class="border-table"
               style="border-bottom: 1px solid rgb(170, 170, 170)"
+              v-if="arrHeader.includes('ema_24h_200')"
             >
               EMA200
             </th>
@@ -490,6 +511,7 @@ export default {
         ema_1h_50: x.ema_1h_50,
         ema_1h_100: x.ema_1h_100,
         ema_1h_200: x.ema_1h_200,
+
         ema_4h_12: x.ema_4h_12,
         ema_4h_21: x.ema_4h_21,
         ema_4h_26: x.ema_4h_26,
@@ -504,9 +526,9 @@ export default {
         ema_24h_200: x.ema_24h_200,
       }));
       this.data_table = this.data;
-      this.loading = false;
       this.$refs.dialogColumn.setLisColumnShow();
       this.getColumnShow();
+      this.loading = false;
       setTimeout(() => this.initialize(), 5 * 60 * 1000);
     },
     getColumnShow() {
@@ -561,6 +583,39 @@ export default {
     clickFilterColumn() {
       this.$refs.dialogColumn.open();
     },
+    check1H() {
+      let check = [
+        "ema_1h_12",
+        "ema_1h_21",
+        "ema_1h_26",
+        "ema_1h_50",
+        "ema_1h_100",
+        "ema_1h_200",
+      ];
+      return this.arrHeader.some((x) => check.includes(x));
+    },
+    check4H() {
+      let check = [
+        "ema_4h_12",
+        "ema_4h_21",
+        "ema_4h_26",
+        "ema_4h_50",
+        "ema_4h_100",
+        "ema_4h_200",
+      ];
+      return this.arrHeader.some((x) => check.includes(x));
+    },
+    check24H() {
+      let check = [
+        "ema_24h_12",
+        "ema_24h_21",
+        "ema_24h_26",
+        "ema_24h_50",
+        "ema_24h_100",
+        "ema_24h_200",
+      ];
+      return this.arrHeader.some((x) => check.includes(x));
+    },
   },
   computed: {
     listFields() {
@@ -569,6 +624,13 @@ export default {
         text: x.text,
         value: x.value,
       }));
+    },
+    arrHeader() {
+      if (!this.headers_.length) {
+        return [];
+      }
+      // console.log(this.headers_.filter((x) => !x.text).map((x) => x.value));
+      return this.headers_.filter((x) => x.text).map((x) => x.value);
     },
   },
 };
