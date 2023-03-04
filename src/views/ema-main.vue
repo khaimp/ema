@@ -36,7 +36,7 @@
               PRICE
             </th>
             <th
-              colspan="6"
+              :colspan="colspan1h()"
               class="text-center border-table"
               style="background-color: #3b3b3b"
               v-if="check1H()"
@@ -44,7 +44,7 @@
               <span style="color: white; font-size: 16px">1H</span>
             </th>
             <th
-              colspan="6"
+              :colspan="colspan4h()"
               class="text-center border-table"
               style="background-color: #3b3b3b"
               v-if="check4H()"
@@ -52,7 +52,7 @@
               <span style="color: white; font-size: 16px">4H</span>
             </th>
             <th
-              colspan="6"
+              :colspan="colspan24h()"
               class="text-center border-table"
               style="background-color: #3b3b3b"
               v-if="check24H()"
@@ -484,6 +484,30 @@ export default {
     },
     check_favorite: false,
     headers_: [],
+    field1H: [
+      "ema_1h_12",
+      "ema_1h_21",
+      "ema_1h_26",
+      "ema_1h_50",
+      "ema_1h_100",
+      "ema_1h_200",
+    ],
+    field4H: [
+      "ema_4h_12",
+      "ema_4h_21",
+      "ema_4h_26",
+      "ema_4h_50",
+      "ema_4h_100",
+      "ema_4h_200",
+    ],
+    field24H: [
+      "ema_24h_12",
+      "ema_24h_21",
+      "ema_24h_26",
+      "ema_24h_50",
+      "ema_24h_100",
+      "ema_24h_200",
+    ],
   }),
   watch: {
     "form.search": {
@@ -584,37 +608,40 @@ export default {
       this.$refs.dialogColumn.open();
     },
     check1H() {
-      let check = [
-        "ema_1h_12",
-        "ema_1h_21",
-        "ema_1h_26",
-        "ema_1h_50",
-        "ema_1h_100",
-        "ema_1h_200",
-      ];
-      return this.arrHeader.some((x) => check.includes(x));
+      return this.arrHeader.some((x) => this.field1H.includes(x));
     },
     check4H() {
-      let check = [
-        "ema_4h_12",
-        "ema_4h_21",
-        "ema_4h_26",
-        "ema_4h_50",
-        "ema_4h_100",
-        "ema_4h_200",
-      ];
-      return this.arrHeader.some((x) => check.includes(x));
+      return this.arrHeader.some((x) => this.field4H.includes(x));
     },
     check24H() {
-      let check = [
-        "ema_24h_12",
-        "ema_24h_21",
-        "ema_24h_26",
-        "ema_24h_50",
-        "ema_24h_100",
-        "ema_24h_200",
-      ];
-      return this.arrHeader.some((x) => check.includes(x));
+      return this.arrHeader.some((x) => this.field24H.includes(x));
+    },
+    colspan1h() {
+      let count = 0;
+      this.arrHeader.forEach((element) => {
+        if (this.field1H.includes(element)) {
+          count++;
+        }
+      });
+      return count;
+    },
+    colspan4h() {
+      let result = 0;
+      this.arrHeader.forEach((element) => {
+        if (this.field4H.includes(element)) {
+          result++;
+        }
+      });
+      return result;
+    },
+    colspan24h() {
+      let result = 0;
+      this.arrHeader.forEach((element) => {
+        if (this.field24H.includes(element)) {
+          result++;
+        }
+      });
+      return result;
     },
   },
   computed: {
@@ -629,7 +656,7 @@ export default {
       if (!this.headers_.length) {
         return [];
       }
-      // console.log(this.headers_.filter((x) => !x.text).map((x) => x.value));
+      console.log(this.headers_.filter((x) => x.text).map((x) => x.value));
       return this.headers_.filter((x) => x.text).map((x) => x.value);
     },
   },
