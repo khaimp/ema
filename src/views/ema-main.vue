@@ -656,7 +656,6 @@ export default {
       if (!this.headers_.length) {
         return [];
       }
-      console.log(this.headers_.filter((x) => x.text).map((x) => x.value));
       return this.headers_.filter((x) => x.text).map((x) => x.value);
     },
   },
